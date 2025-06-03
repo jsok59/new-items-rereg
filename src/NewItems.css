@@ -1,0 +1,14 @@
+.NewItemModal {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: aliceblue;
+  max-width: 1500px;
+  max-height: 100%;
+}
+
+.NewItemModal.hidden {
+  display: none;
+}
