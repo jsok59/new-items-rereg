@@ -1,49 +1,66 @@
 .NewItemModal {
-	display: flex;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: aliceblue;
-	width: 80%;
-	height: 80%;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: aliceblue;
+  width: 80%;
+  height: 80%;
 }
 
 .NewItemModal.hidden {
-	display: none;
+  display: none;
 }
 
 .NewItemModal .preview-container {
-	max-width: 1000px;
+  max-width: 1000px;
+  flex: 1;
+  align-self: center;
+}
+
+.NewItemModal form {
+  flex: 1;
 }
 
 .Item {
-	width: 3.4576in;
-	height: 2.2396in;
-	background-color: white;
+  width: 3.4576in;
+  height: 2.2396in;
+  background-color: white;
+  border: 0.01in solid black;
+  justify-self: center;
 }
 
 .Item .header {
-	height: 0.2403in;
-	background-color: #e7d6cc;
-	font-size: 11pt;
-	display: flex;
-	flex-direction: row;
-	border: 1px solid #ccc;
+  height: 0.2403in;
+  background-color: #e7d6cc;
+  font-size: 11pt;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 0.01in solid black;
+}
+
+.Item .content .top > * {
+  padding: 0.0208in;
+}
+
+.Item .flex-container {
+  display: flex;
+  gap: 0.16in;
 }
 
 .header .itemnum {
-	width: 0.6458in;
-	text-align: center;
-	font-weight: bold;
-	align-self: center;
+  width: 0.6458in;
+  text-align: center;
+  font-weight: bold;
+  align-self: center;
 }
 
 .content img {
-	width: 1.7282in;
-	height: 1.5938in;
+  width: 1.7282in;
+  height: 1.5938in;
 }
 
 .Item .top {
-	display: flex;
+  display: flex;
 }
