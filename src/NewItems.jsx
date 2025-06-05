@@ -1,51 +1,83 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./NewItems.css";
+import Item from "./Item.jsx";
+import { loadCsvAsJson } from "./data.jsx";
 
 export default function NewItems() {
-  const [items, setItems] = useState([
-    { id: "00020D", name: "Rice" },
-    { id: "00030D", name: "Rice2" },
-  ]);
-  const [isOpen, toggleModal] = useState(false);
+	const [items, setItems] = useState([
+		{ id: "00020D", barcode: "Rice" },
+		{ id: "00030D", barcode: "Rice2" },
+	]);
 
-  const openModal = () => toggleModal(true);
-  const closeModal = () => toggleModal(false);
+	const [isOpen, toggleModal] = useState(false);
+	const [data, setData] = useState([]);
 
-  if (items.length > 5) {
-    setItems(null);
-  }
+	useEffect(() => {
+		loadCsvAsJson().then((json) => setData(json));
+	}, []);
 
-  return (
-    <div className="NewItems">
-      <div>
-        <h3>New Items</h3>
-        <button onClick={openModal}>Add Item</button>
-      </div>
-      <NewItemModal closeModal={closeModal} isOpen={isOpen}></NewItemModal>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <p>{item.id}</p>
-            <p>{item.name}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+	const openModal = () => toggleModal(true);
+	const closeModal = () => toggleModal(false);
+
+	if (items.length > 5) {
+		setItems(null);
+	}
+
+	return (
+		<div className="NewItems">
+			<div>
+				<h3>New Items</h3>
+				<button onClick={openModal}>Add Item</button>
+			</div>
+			<NewItemModal closeModal={closeModal} isOpen={isOpen} data={data}></NewItemModal>
+
+			<ul>
+				{items.map((item) => (
+					<li key={item.id}>
+						<p>{item.id}</p>
+						<p>{item.name}</p>
+					</li>
+				))}
+			</ul>
+		</div>
+	);
 }
 
-function NewItemModal({ closeModal, isOpen }) {
-  return (
-    <div className={isOpen ? "NewItemModal" : "NewItemModal hidden"}>
-      <form action="">
-        <label for="itemNum">Item Number:</label>
-        <input type="text" id="itemNum" name="itemNum" />
-        <label for="itemNum">Barcode1:</label>
-        <input type="text" id="itemNum" name="itemNum" />
-        <label for="itemNum">Description:</label>
-        <input type="text" id="itemNum" name="itemNum" />
-        <button onClick={closeModal}>Done</button>
-      </form>
-    </div>
-  );
+function NewItemModal({ closeModal, isOpen, data }) {
+	const [itemNum, setItemNum] = useState("");
+	const [description, setDescription] = useState("");
+	const [brand, setBrand] = useState("");
+	const [kor_description, setKorDescription] = useState("");
+
+	function handleItemNum(e) {
+		setItemNum(e.target.value);
+	}
+
+	useEffect(() => {
+		const item = data.find((obj) => obj["No."] === itemNum);
+		console.log(item);
+		if (item) {
+			setDescription(item["Description"]);
+			setBrand(item["Brand"]);
+			setKorDescription(item["Description 2"]);
+		}
+	}, [itemNum, data]);
+	return (
+		<div className={isOpen ? "NewItemModal" : "NewItemModal hidden"}>
+			<form action="">
+				<label for="itemNum">Item Number:</label>
+				<input type="text" id="itemNum" name="itemNum" onChange={handleItemNum} />
+				<label for="itemNum">Brand:</label>
+				<input type="text" id="brand" name="brand" value={brand} onChange={(e) => setBrand(e.target.value)} />
+				<label for="itemNum">Korean Description:</label>
+				<input type="text" id="kor-description" name="kor-description" value={kor_description} onChange={(e) => setKorDescription(e.target.value)} />
+				<label for="itemNum">Description:</label>
+				<input type="text" id="description" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+				<button onClick={closeModal}>Done</button>
+			</form>
+			<div className="preview-container">
+				<Item itemNum={itemNum} brand={brand} description={description} kor_description={kor_description}></Item>
+			</div>
+		</div>
+	);
 }
