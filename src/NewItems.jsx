@@ -10,10 +10,14 @@ export default function NewItems() {
 	]);
 
 	const [isOpen, toggleModal] = useState(false);
-	const [data, setData] = useState([]);
+	const [itemData, setItemData] = useState([]);
+	const [barcodeData, setBarcodeData] = useState([]);
 
 	useEffect(() => {
-		loadCsvAsJson().then((json) => setData(json));
+		loadCsvAsJson().then(([items, barcodes]) => {
+			setItemData(items);
+			setBarcodeData(barcodes);
+		});
 	}, []);
 
 	const openModal = () => toggleModal(true);
@@ -29,7 +33,7 @@ export default function NewItems() {
 				<h3>New Items</h3>
 				<button onClick={openModal}>Add Item</button>
 			</div>
-			<NewItemModal closeModal={closeModal} isOpen={isOpen} data={data}></NewItemModal>
+			<NewItemModal closeModal={closeModal} isOpen={isOpen} itemData={itemData} barcodeData={barcodeData}></NewItemModal>
 
 			<ul>
 				{items.map((item) => (
@@ -43,7 +47,8 @@ export default function NewItems() {
 	);
 }
 
-function NewItemModal({ closeModal, isOpen, data }) {
+function NewItemModal({ closeModal, isOpen, itemData, barcodeData }) {
+	window.debug = { barcodeData, itemData };
 	const [itemNum, setItemNum] = useState("");
 	const [description, setDescription] = useState("");
 	const [brand, setBrand] = useState("");
@@ -54,6 +59,8 @@ function NewItemModal({ closeModal, isOpen, data }) {
 	const [unitPrice, setUnitPrice] = useState(0);
 	const [salesToRetail, setSalesToRetail] = useState(0);
 	const [priceCode, setPriceCode] = useState(0);
+	const [barcodeRetail, setBarcodeRetail] = useState("");
+	const [barcodeNotRetail, setBarcodeNotRetail] = useState("");
 
 	function handleItemNum(e) {
 		setItemNum(e.target.value);
@@ -78,13 +85,8 @@ function NewItemModal({ closeModal, isOpen, data }) {
 		return [...first, ...firstMid, ...secondMid, ...second].join("");
 	}
 
-	window.debug = {
-		calcPriceCode,
-	};
-
 	useEffect(() => {
-		const item = data.find((obj) => obj["No."] === itemNum);
-		console.log(item);
+		const item = itemData.find((obj) => obj["No."] === itemNum);
 		if (item) {
 			setDescription(item["Description"]);
 			setBrand(item["Brand"]);
@@ -94,7 +96,20 @@ function NewItemModal({ closeModal, isOpen, data }) {
 			setUnitPrice(item["Unit Price"]);
 			setSalesToRetail(item["Sales to Retail Conv. Factor"]);
 		}
-	}, [itemNum, data]);
+	}, [itemNum, itemData]);
+
+	useEffect(() => {
+		const itemWithRetail = barcodeData.find((obj) => obj["Item No."] === itemNum && obj["Description"].includes("RETAIL"));
+		const itemWithoutRetail = barcodeData.find((obj) => obj["Item No."] === itemNum && !obj["Description"].includes("RETAIL"));
+
+		if (itemWithRetail) {
+			setBarcodeRetail(itemWithRetail["Reference No."]);
+		}
+
+		if (itemWithoutRetail) {
+			setBarcodeNotRetail(itemWithoutRetail["Reference No."]);
+		}
+	}, [itemNum, barcodeData]);
 
 	useEffect(() => {
 		if (unitPrice && salesToRetail) {
@@ -145,10 +160,30 @@ function NewItemModal({ closeModal, isOpen, data }) {
 					<label for="priceCode">Price Code:</label>
 					<input type="text" id="priceCode" name="priceCode" value={priceCode} onChange={(e) => setPriceCode(e.target.value)} />
 				</div>
+				<div>
+					<label for="barcodeRetail">Retail Barcode:</label>
+					<input type="text" id="barcodeRetail" name="barcodeRetail" value={barcodeRetail} onChange={(e) => setBarcodeRetail(e.target.value)} />
+				</div>
+				<div>
+					<label for="barcodeNotRetail">Not Retail Barcode:</label>
+					<input type="text" id="barcodeNotRetail" name="barcodeNotRetail" value={barcodeNotRetail} onChange={(e) => setBarcodeNotRetail(e.target.value)} />
+				</div>
 				<button onClick={closeModal}>Done</button>
 			</form>
 			<div className="preview-container">
-				<Item itemNum={itemNum} brand={brand} description={description} kor_description={kor_description} uom={uom} size={size} exd={exd} unitPrice={unitPrice} priceCode={priceCode}></Item>
+				<Item
+					itemNum={itemNum}
+					brand={brand}
+					description={description}
+					kor_description={kor_description}
+					uom={uom}
+					size={size}
+					exd={exd}
+					unitPrice={unitPrice}
+					priceCode={priceCode}
+					barcodeRetail={barcodeRetail}
+					barcodeNotRetail={barcodeNotRetail}
+				></Item>
 			</div>
 		</div>
 	);

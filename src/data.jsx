@@ -1,7 +1,9 @@
 export async function loadCsvAsJson() {
-	const response = await fetch("/Items.csv");
-	const text = await response.text();
-	return csvToJson(text);
+	const itemResponse = await fetch("/Items.csv");
+	const barcodeResponse = await fetch("/ItemReferences.csv");
+	const itemText = await itemResponse.text();
+	const barcodeText = await barcodeResponse.text();
+	return [csvToJson(itemText), csvToJson(barcodeText)];
 }
 
 function csvToJson(csvText) {
