@@ -3,7 +3,7 @@ import { loadCsvAsJson } from "./data.jsx";
 import JsBarcode from "jsbarcode";
 import "./Item.css";
 
-export default function Item({ itemNum, brand, description, kor_description, uom, size, exd, priceCode, barcodeRetail, barcodeNotRetail, category, editItem }) {
+export default function Item({ item, editItem }) {
 	function Barcode({ value = "" }) {
 		const svgRef = useRef();
 
@@ -24,35 +24,35 @@ export default function Item({ itemNum, brand, description, kor_description, uom
 		return <svg ref={svgRef}></svg>;
 	}
 	return (
-		<div className="Item">
+		<div className="Item" onClick={() => editItem(item)}>
 			<div className="header">
-				<div className="itemnum">{itemNum}</div>
-				<div className="kor-description">{kor_description}</div>
+				<div className="itemnum">{item.id}</div>
+				<div className="kor-description">{item.kor_description}</div>
 			</div>
 			<div className="content">
 				<div className="left">
 					<div className="container-1">
 						<div className="description">
-							{brand}, {description}
+							{item.brand}, {item.description}
 						</div>
 					</div>
 					<div className="container-2">
-						<div className="size">{size}</div>
+						<div className="size">{item.size}</div>
 						<div className="flex-container">
-							<div className="uom">{uom}</div>
-							<div className="exd">{exd}</div>
-							<div className="priceCode">{priceCode}</div>
+							<div className="uom">{item.uom}</div>
+							<div className="exd">{item.exd}</div>
+							<div className="priceCode">{item.priceCode}</div>
 						</div>
-						<div className="barcodeRetail">{barcodeRetail}</div>
+						<div className="barcodeRetail">{item.barcodeRetail}</div>
 					</div>
 					<div className="container-3">
-						<div className="barcodeNotRetail">{barcodeNotRetail}</div>
-						<Barcode value={barcodeRetail}></Barcode>
+						<div className="barcodeNotRetail">{item.barcodeNotRetail}</div>
+						<Barcode value={item.barcodeRetail}></Barcode>
 					</div>
 				</div>
 				<div className="right">
-					<img src={"/" + itemNum + ".jpg"} alt="item" />
-					<img className="category" src={`icon-${category}.jpg`} alt="category" />
+					<img src={"/" + item.id + ".jpg"} alt="item" />
+					<img className="category" src={`icon-${item.category}.jpg`} alt="category" />
 				</div>
 			</div>
 		</div>
