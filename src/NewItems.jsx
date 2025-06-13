@@ -28,8 +28,8 @@ export default function NewItems() {
 		if (hasDuplicate) {
 			const index = items.findIndex((element) => element.id === obj.id);
 			if (index !== -1) {
-				items.splice(index, 1);
-				setItems([...items, obj]);
+				items.splice(index, 1, obj);
+				setItems([...items]);
 			}
 		} else {
 			setItems([...items, obj]);
@@ -41,7 +41,6 @@ export default function NewItems() {
 
 		if (index !== -1) {
 			items.splice(index, 1);
-			console.log(items);
 			setItems([...items]);
 		}
 	};
