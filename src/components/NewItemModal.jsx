@@ -1,84 +1,8 @@
 import { useState, useEffect } from "react";
-import "./NewItems.css";
+import "../styles/NewItemModal.css";
 import Item from "./Item.jsx";
-import { loadCsvAsJson } from "./data.jsx";
 
-export default function NewItems() {
-	const [items, setItems] = useState([]);
-	const [isOpen, toggleModal] = useState(false);
-	const [itemData, setItemData] = useState([]);
-	const [barcodeData, setBarcodeData] = useState([]);
-	const [currItem, setCurrItem] = useState({});
-
-	useEffect(() => {
-		loadCsvAsJson().then(([items, barcodes]) => {
-			setItemData(items);
-			setBarcodeData(barcodes);
-		});
-	}, []);
-
-	const openModal = () => toggleModal(true);
-	const closeModal = (e) => {
-		e.preventDefault();
-		toggleModal(false);
-	};
-	const addItem = (obj) => {
-		toggleModal(false);
-		const hasDuplicate = items.some((item) => item.id === obj.id);
-		if (hasDuplicate) {
-			const index = items.findIndex((element) => element.id === obj.id);
-			if (index !== -1) {
-				items.splice(index, 1, obj);
-				setItems([...items]);
-			}
-		} else {
-			setItems([...items, obj]);
-		}
-	};
-
-	const removeItem = (id) => {
-		const index = items.findIndex((element) => element.id === id);
-
-		if (index !== -1) {
-			items.splice(index, 1);
-			setItems([...items]);
-		}
-	};
-
-	const editItem = (item) => {
-		setCurrItem(item);
-		toggleModal(true);
-	};
-
-	return (
-		<div className="NewItems">
-			<div>
-				<h3>New Items</h3>
-				<button onClick={openModal}>Add Item</button>
-			</div>
-			<NewItemModal
-				closeModal={closeModal}
-				isOpen={isOpen}
-				itemData={itemData}
-				barcodeData={barcodeData}
-				addItem={addItem}
-				currItem={currItem}
-				editItem={editItem}
-			></NewItemModal>
-
-			<ul>
-				{items.map((item) => (
-					<li key={item.id} className="item-container" id={item.id}>
-						<Item key={item.id} item={item} editItem={editItem}></Item>
-						<button onClick={(e) => removeItem(e.target.parentElement.id)}>Delete</button>
-					</li>
-				))}
-			</ul>
-		</div>
-	);
-}
-
-function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, currItem, editItem }) {
+export default function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, currItem, editItem }) {
 	const [item, setItem] = useState({
 		id: "",
 		description: "",
@@ -162,7 +86,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 		<div className={isOpen ? "NewItemModal" : "NewItemModal hidden"}>
 			<form action="">
 				<div>
-					<label for="itemNum">Item Number:</label>
+					<label htmlFor="itemNum">Item Number:</label>
 					<input
 						type="text"
 						id="itemNum"
@@ -172,7 +96,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="brand">Brand:</label>
+					<label htmlFor="brand">Brand:</label>
 					<input
 						type="text"
 						id="brand"
@@ -182,7 +106,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="kor-description">Korean Description:</label>
+					<label htmlFor="kor-description">Korean Description:</label>
 					<input
 						type="text"
 						id="kor-description"
@@ -192,7 +116,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="description">Description:</label>
+					<label htmlFor="description">Description:</label>
 					<input
 						type="text"
 						id="description"
@@ -202,7 +126,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="size">Size:</label>
+					<label htmlFor="size">Size:</label>
 					<input
 						type="text"
 						id="size"
@@ -212,15 +136,15 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="uom">Base Uom:</label>
+					<label htmlFor="uom">Base Uom:</label>
 					<input type="text" id="uom" name="uom" value={item.uom} onChange={(e) => setItem((prev) => ({ ...prev, uom: e.target.value }))} />
 				</div>
 				<div>
-					<label for="exd">ExD:</label>
+					<label htmlFor="exd">ExD:</label>
 					<input type="text" id="exd" name="exd" value={item.exd} onChange={(e) => setItem((prev) => ({ ...prev, exd: e.target.value }))} />
 				</div>
 				<div>
-					<label for="unitPrice">Unit Price:</label>
+					<label htmlFor="unitPrice">Unit Price:</label>
 					<input
 						type="text"
 						id="unitPrice"
@@ -230,7 +154,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="salesToRetail">Sales to Retail Qty:</label>
+					<label htmlFor="salesToRetail">Sales to Retail Qty:</label>
 					<input
 						type="text"
 						id="salesToRetail"
@@ -240,7 +164,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="priceCode">Price Code:</label>
+					<label htmlFor="priceCode">Price Code:</label>
 					<input
 						type="text"
 						id="priceCode"
@@ -250,7 +174,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="barcodeRetail">Retail Barcode:</label>
+					<label htmlFor="barcodeRetail">Retail Barcode:</label>
 					<input
 						type="text"
 						id="barcodeRetail"
@@ -260,7 +184,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="barcodeNotRetail">Not Retail Barcode:</label>
+					<label htmlFor="barcodeNotRetail">Not Retail Barcode:</label>
 					<input
 						type="text"
 						id="barcodeNotRetail"
@@ -270,7 +194,7 @@ function NewItemModal({ closeModal, isOpen, itemData, barcodeData, addItem, curr
 					/>
 				</div>
 				<div>
-					<label for="category">Category:</label>
+					<label htmlFor="category">Category:</label>
 					<select
 						type="text"
 						id="category"

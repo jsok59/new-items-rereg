@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from "react";
-import { loadCsvAsJson } from "./data.jsx";
+import { useEffect, useRef } from "react";
 import JsBarcode from "jsbarcode";
-import "./Item.css";
+import "../styles/Item.css";
 
 export default function Item({ item, editItem }) {
 	function Barcode({ value = "" }) {
@@ -24,7 +23,7 @@ export default function Item({ item, editItem }) {
 		return <svg ref={svgRef}></svg>;
 	}
 	return (
-		<div className="Item" onClick={() => editItem(item)}>
+		<div className="Item" onClick={() => editItem(item.id)}>
 			<div className="header">
 				<div className="itemnum">{item.id}</div>
 				<div className="kor-description">{item.kor_description}</div>
