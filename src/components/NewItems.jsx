@@ -9,9 +9,21 @@ export default function NewItems() {
 	const [isOpen, toggleModal] = useState(false);
 	const [itemData, setItemData] = useState([]);
 	const [barcodeData, setBarcodeData] = useState([]);
-	const [selectedID, setSelectedID] = useState("");
-
-	const selectedItem = items.find((item) => item.id === selectedID);
+	const [item, setItem] = useState({
+		id: "",
+		description: "",
+		brand: "",
+		kor_description: "",
+		uom: "",
+		size: "",
+		exd: "",
+		unitPrice: 0,
+		salesToRetail: 0,
+		priceCode: 0,
+		barcodeRetail: "0",
+		barcodeNotRetail: "0",
+		category: "",
+	});
 
 	useEffect(() => {
 		loadCsvAsJson().then(([items, barcodes]) => {
@@ -20,7 +32,24 @@ export default function NewItems() {
 		});
 	}, []);
 
-	const openModal = () => toggleModal(true);
+	const openModal = () => {
+		toggleModal(true);
+		setItem({
+			id: "",
+			description: "",
+			brand: "",
+			kor_description: "",
+			uom: "",
+			size: "",
+			exd: "",
+			unitPrice: 0,
+			salesToRetail: 0,
+			priceCode: 0,
+			barcodeRetail: "0",
+			barcodeNotRetail: "0",
+			category: "",
+		});
+	};
 	const closeModal = (e) => {
 		e.preventDefault();
 		toggleModal(false);
@@ -48,8 +77,8 @@ export default function NewItems() {
 		}
 	};
 
-	const editItem = (id) => {
-		setSelectedID(id);
+	const editItem = (item) => {
+		setItem(item);
 		toggleModal(true);
 	};
 
@@ -60,12 +89,13 @@ export default function NewItems() {
 				<button onClick={openModal}>Add Item</button>
 			</div>
 			<NewItemModal
+				item={item}
+				setItem={setItem}
 				closeModal={closeModal}
 				isOpen={isOpen}
 				itemData={itemData}
 				barcodeData={barcodeData}
 				addItem={addItem}
-				currItem={selectedItem}
 				editItem={editItem}
 			></NewItemModal>
 

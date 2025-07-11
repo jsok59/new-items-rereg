@@ -23,7 +23,7 @@ export default function Item({ item, editItem }) {
 		return <svg ref={svgRef}></svg>;
 	}
 	return (
-		<div className="Item" onClick={() => editItem(item.id)}>
+		<div className="Item" onClick={() => editItem(item)}>
 			<div className="header">
 				<div className="itemnum">{item.id}</div>
 				<div className="kor-description">{item.kor_description}</div>
