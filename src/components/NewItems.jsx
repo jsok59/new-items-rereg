@@ -54,27 +54,20 @@ export default function NewItems() {
 		e.preventDefault();
 		toggleModal(false);
 	};
-	const addItem = (obj) => {
+	const addItem = (input) => {
 		toggleModal(false);
-		const hasDuplicate = items.some((item) => item.id === obj.id);
-		if (hasDuplicate) {
-			const index = items.findIndex((element) => element.id === obj.id);
-			if (index !== -1) {
-				items.splice(index, 1, obj);
-				setItems([...items]);
+		setItems((prevItems) => {
+			const index = prevItems.find((iter) => iter.id === input.id);
+			if (index === -1) {
+				return [...prevItems.slice(0, index), input, ...prevItems.slice(index + 1)];
+			} else {
+				return [...prevItems, input];
 			}
-		} else {
-			setItems([...items, obj]);
-		}
+		});
 	};
 
 	const removeItem = (id) => {
-		const index = items.findIndex((element) => element.id === id);
-
-		if (index !== -1) {
-			items.splice(index, 1);
-			setItems([...items]);
-		}
+		setItems(items.filter((iter) => iter.id !== id));
 	};
 
 	const editItem = (item) => {

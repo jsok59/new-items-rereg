@@ -70,16 +70,16 @@ export default function NewItemModal({ item, setItem, closeModal, isOpen, itemDa
 		<div className={isOpen ? "NewItemModal" : "NewItemModal hidden"}>
 			<form action="">
 				<div>
-					<label htmlFor="itemNum">Item Number:</label>
-					<input type="text" id="itemNum" name="itemNum" value={item.id} onChange={handleChange} />
+					<label htmlFor="id">Item Number:</label>
+					<input type="text" id="id" name="id" value={item.id} onChange={handleChange} />
 				</div>
 				<div>
 					<label htmlFor="brand">Brand:</label>
 					<input type="text" id="brand" name="brand" value={item.brand} onChange={handleChange} />
 				</div>
 				<div>
-					<label htmlFor="kor-description">Korean Description:</label>
-					<input type="text" id="kor-description" name="kor-description" value={item.kor_description} onChange={handleChange} />
+					<label htmlFor="kor_description">Korean Description:</label>
+					<input type="text" id="kor_description" name="kor_description" value={item.kor_description} onChange={handleChange} />
 				</div>
 				<div>
 					<label htmlFor="description">Description:</label>
