@@ -57,8 +57,8 @@ export default function NewItems() {
 	const addItem = (input) => {
 		toggleModal(false);
 		setItems((prevItems) => {
-			const index = prevItems.find((iter) => iter.id === input.id);
-			if (index === -1) {
+			const index = prevItems.findIndex((iter) => iter.id === input.id);
+			if (index !== -1) {
 				return [...prevItems.slice(0, index), input, ...prevItems.slice(index + 1)];
 			} else {
 				return [...prevItems, input];
@@ -70,8 +70,11 @@ export default function NewItems() {
 		setItems(items.filter((iter) => iter.id !== id));
 	};
 
-	const editItem = (item) => {
+	const editItem = (itemID) => {
+		const item = items.find((iter) => console.log(iter.id));
+
 		setItem(item);
+
 		toggleModal(true);
 	};
 
@@ -81,16 +84,17 @@ export default function NewItems() {
 				<h3>New Items</h3>
 				<button onClick={openModal}>Add Item</button>
 			</div>
-			<NewItemModal
-				item={item}
-				setItem={setItem}
-				closeModal={closeModal}
-				isOpen={isOpen}
-				itemData={itemData}
-				barcodeData={barcodeData}
-				addItem={addItem}
-				editItem={editItem}
-			></NewItemModal>
+			{isOpen === true && (
+				<NewItemModal
+					item={item}
+					setItem={setItem}
+					closeModal={closeModal}
+					itemData={itemData}
+					barcodeData={barcodeData}
+					addItem={addItem}
+					editItem={editItem}
+				></NewItemModal>
+			)}
 
 			<ul>
 				{items.map((item) => (

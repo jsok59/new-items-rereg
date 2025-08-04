@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import "../styles/NewItemModal.css";
 import Item from "./Item.jsx";
 
-export default function NewItemModal({ item, setItem, closeModal, isOpen, itemData, barcodeData, addItem, editItem }) {
+export default function NewItemModal({ item, setItem, closeModal, itemData, barcodeData, addItem, editItem }) {
 	function calcPriceCode(unitPrice, salesToRetail) {
 		let eachPrice = Math.round((unitPrice / salesToRetail) * 100) / 100;
 		let [first, second] = eachPrice.toFixed(2).split(".");
@@ -22,52 +22,52 @@ export default function NewItemModal({ item, setItem, closeModal, isOpen, itemDa
 		return [...first, ...firstMid, ...secondMid, ...second].join("");
 	}
 
-	useEffect(() => {
-		const itemJSON = itemData.find((element) => element["No."] === item.id);
-		console.log("UseEFfect in play for Item ID changing");
-		if (itemJSON) {
-			console.log("useEffect in itemJSON block");
-			console.log(itemJSON);
-			setItem((prev) => ({
-				...prev,
-				description: itemJSON["Description"],
-				brand: itemJSON["Brand"],
-				kor_description: itemJSON["Description 2"],
-				uom: itemJSON["Base Unit of Measure"],
-				size: itemJSON["Size Description"],
-				unitPrice: itemJSON["Unit Price"],
-				salesToRetail: itemJSON["Sales to Retail Conv. Factor"],
-				category: itemJSON["Storage Type"].toUpperCase(),
-			}));
-		}
-	}, [item.id, setItem, itemData]);
+	// useEffect(() => {
+	// 	const itemJSON = itemData.find((element) => element["No."] === item.id);
+	// 	console.log("UseEFfect in play for Item ID changing");
+	// 	if (itemJSON) {
+	// 		console.log("useEffect in itemJSON block");
+	// 		console.log(itemJSON);
+	// 		setItem((prev) => ({
+	// 			...prev,
+	// 			description: itemJSON["Description"],
+	// 			brand: itemJSON["Brand"],
+	// 			kor_description: itemJSON["Description 2"],
+	// 			uom: itemJSON["Base Unit of Measure"],
+	// 			size: itemJSON["Size Description"],
+	// 			unitPrice: itemJSON["Unit Price"],
+	// 			salesToRetail: itemJSON["Sales to Retail Conv. Factor"],
+	// 			category: itemJSON["Storage Type"].toUpperCase(),
+	// 		}));
+	// 	}
+	// }, [item.id, setItem, itemData]);
 
-	useEffect(() => {
-		const itemWithRetail = barcodeData.find((element) => element["Item No."] === item.id && element["Description"].includes("RETAIL"));
+	// useEffect(() => {
+	// 	const itemWithRetail = barcodeData.find((element) => element["Item No."] === item.id && element["Description"].includes("RETAIL"));
 
-		const itemWithoutRetail = barcodeData.find((element) => element["Item No."] === item.id && !element["Description"].includes("RETAIL"));
+	// 	const itemWithoutRetail = barcodeData.find((element) => element["Item No."] === item.id && !element["Description"].includes("RETAIL"));
 
-		if (itemWithRetail) {
-			setItem((prev) => ({ ...prev, barcodeRetail: itemWithRetail["Reference No."] }));
-		}
+	// 	if (itemWithRetail) {
+	// 		setItem((prev) => ({ ...prev, barcodeRetail: itemWithRetail["Reference No."] }));
+	// 	}
 
-		if (itemWithoutRetail) {
-			setItem((prev) => ({ ...prev, barcodeNotRetail: itemWithoutRetail["Reference No."] }));
-		}
-	}, [item.id, setItem, barcodeData]);
+	// 	if (itemWithoutRetail) {
+	// 		setItem((prev) => ({ ...prev, barcodeNotRetail: itemWithoutRetail["Reference No."] }));
+	// 	}
+	// }, [item.id, setItem, barcodeData]);
 
-	useEffect(() => {
-		if (item.unitPrice && item.salesToRetail) {
-			setItem((prev) => ({ ...prev, priceCode: calcPriceCode(item.unitPrice, item.salesToRetail) }));
-		}
-	}, [item.unitPrice, setItem, item.salesToRetail]);
+	// useEffect(() => {
+	// 	if (item.unitPrice && item.salesToRetail) {
+	// 		setItem((prev) => ({ ...prev, priceCode: calcPriceCode(item.unitPrice, item.salesToRetail) }));
+	// 	}
+	// }, [item.unitPrice, setItem, item.salesToRetail]);
 
 	function handleChange(e) {
 		setItem((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 	}
 
 	return (
-		<div className={isOpen ? "NewItemModal" : "NewItemModal hidden"}>
+		<div className="NewItemModal">
 			<form action="">
 				<div>
 					<label htmlFor="id">Item Number:</label>

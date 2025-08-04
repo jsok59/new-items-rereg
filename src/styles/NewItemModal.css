@@ -10,10 +10,6 @@
 	z-index: 1;
 }
 
-.NewItemModal.hidden {
-	display: none;
-}
-
 .NewItemModal .preview-container {
 	max-width: 1000px;
 	flex: 1;
