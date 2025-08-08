@@ -60,13 +60,13 @@ export default function NewItems() {
     setItems(items.filter((iter) => iter.id !== id));
   };
 
-  //   const editItem = (itemID) => {
-  //     const item = items.find((iter) => console.log(iter.id));
+  const editItem = (itemID) => {
+    const item = items.find((iter) => console.log(iter.id));
 
-  //     setItem(item);
+    setItem(item);
 
-  //     setIsOpen(true);
-  //   };
+    setIsOpen(true);
+  };
 
   return (
     <div className="NewItems">
@@ -89,7 +89,7 @@ export default function NewItems() {
       <ul>
         {items.map((item) => (
           <li key={item.id} className="item-container" id={item.id}>
-            {/* <Item key={item.id} item={item} editItem={editItem}></Item> */}
+            <Item key={item.id} item={item} editItem={editItem}></Item>
             <button onClick={(e) => removeItem(e.target.parentElement.id)}>
               Delete
             </button>

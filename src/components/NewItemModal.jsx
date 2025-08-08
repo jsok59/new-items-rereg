@@ -47,30 +47,42 @@ export default function NewItemModal({
   function handleChange(e) {
     setItem((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
-
+  console.log(itemData[0]);
   function handleFindItem(e) {
     e.preventDefault();
     const itemInput = itemData.find((iter) => iter["No."] === item.id);
+    const itemWithRetail = barcodeData.find(
+      (element) =>
+        element["Item No."] === item.id &&
+        element["Description"].includes("RETAIL")
+    );
+    const itemWithoutRetail = barcodeData.find(
+      (element) =>
+        element["Item No."] === item.id &&
+        !element["Description"].includes("RETAIL")
+    );
+
     const itemBarcode = barcodeData.find(
       (iter) => iter["Item No."] === item.id
     );
     console.log(itemBarcode);
     if (itemInput) {
-      setItem({
-        id: "",
-        description: "",
-        brand: "",
-        kor_description: "",
-        uom: "",
-        size: "",
-        exd: "",
-        unitPrice: 0,
-        salesToRetail: 0,
-        priceCode: 0,
-        barcodeRetail: "0",
-        barcodeNotRetail: "0",
-        category: "",
-      });
+      setItem((prev) => ({
+        ...prev,
+        id: itemInput["No."],
+        description: itemInput["Description"],
+        brand: itemInput["Brand"],
+        kor_description: itemInput["Description 2"],
+        uom: itemInput["Base Unit of Measure"],
+        size: itemInput["Size Description"],
+        unitPrice: itemInput["Unit Price"],
+        salesToRetail: itemInput["Sales to Retail Conv. Factor"],
+        barcodeRetail: itemWithRetail["Reference No."],
+        barcodeNotRetail: itemWithoutRetail["Reference No."],
+        category: itemInput["Storage Type"],
+      }));
+    } else {
+      alert("Could not find item in BC");
     }
   }
 
@@ -222,7 +234,7 @@ export default function NewItemModal({
         </button>
       </form>
       <div className="preview-container">
-        {/* <Item item={item} editItem={editItem}></Item> */}
+        <Item item={item} editItem={editItem}></Item>
       </div>
     </div>
   );
