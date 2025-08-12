@@ -1,13 +1,24 @@
 .NewItemModal {
 	display: flex;
+	flex-direction: column;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: aliceblue;
-	width: 80%;
-	height: 80%;
+	min-width: 80vw;
+	min-height: fit-content;
 	z-index: 1;
+	border: black 3px solid;
+}
+
+.NewItemModal > h1 {
+	text-align: center;
+}
+
+.bot-container {
+	display: flex;
+	flex-direction: row;
 }
 
 .NewItemModal .preview-container {
@@ -19,4 +30,21 @@
 .NewItemModal form {
 	flex: 1;
 	padding: 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+form button {
+	min-width: fit-content;
+}
+
+form > div {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+div > input {
+	flex: 1;
 }
