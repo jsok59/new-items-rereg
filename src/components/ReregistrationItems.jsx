@@ -3,6 +3,7 @@ import "../styles/Items.css";
 import Item from "./Item.jsx";
 import { useDataContext } from "./DataProvider.jsx";
 import ReregistrationModal from "./ReregistrationModal.jsx";
+import { Link } from "react-router-dom";
 
 export default function ReregistrationItems() {
 	const { itemData, barcodeData, loading, error } = useDataContext();
