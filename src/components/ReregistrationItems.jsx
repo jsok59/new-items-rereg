@@ -3,7 +3,7 @@ import "../styles/Items.css";
 import Item from "./Item.jsx";
 import { useDataContext } from "./DataProvider.jsx";
 import ReregistrationModal from "./ReregistrationModal.jsx";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ReregistrationItems() {
   const { itemData, barcodeData, loading, error } = useDataContext();
@@ -17,18 +17,25 @@ export default function ReregistrationItems() {
     addItem,
     removeItem,
     editItem,
-  } = useItemManagement();
+  } = useItemManagement("reregitems");
+  const navigate = useNavigate();
 
   // Handle loading and error states
   if (loading) return <div>Loading data...</div>;
   if (error) return <div>Error loading data: {error.message}</div>;
+
+  const handlePrintClick = () => {
+    localStorage.setItem("itemlist", JSON.stringify(items));
+    // Navigate with state
+    navigate("/PrintNewItems", { state: { items } });
+  };
 
   return (
     <div className="Items">
       <div>
         <h3>Reregistration Items</h3>
         <button onClick={openModal}>Add Item</button>
-        <button>Print</button>
+        <button onClick={handlePrintClick}>Print</button>
       </div>
       {isOpen === true && (
         <ReregistrationModal

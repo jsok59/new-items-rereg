@@ -4,6 +4,7 @@ import Item from "./Item.jsx";
 import { useDataContext } from "./DataProvider.jsx";
 import NewItemModal from "./NewItemModal.jsx";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function NewItems() {
   const { itemData, barcodeData, loading, error } = useDataContext();
@@ -17,20 +18,24 @@ export default function NewItems() {
     addItem,
     removeItem,
     editItem,
-  } = useItemManagement();
-
+  } = useItemManagement("newitems");
+  const navigate = useNavigate();
   // Handle loading and error states
   if (loading) return <div>Loading data...</div>;
   if (error) return <div>Error loading data: {error.message}</div>;
+
+  const handlePrintClick = () => {
+    localStorage.setItem("itemlist", JSON.stringify(items));
+    // Navigate with state
+    navigate("/PrintNewItems", { state: { items } });
+  };
 
   return (
     <div className="Items">
       <div>
         <h3>New Items</h3>
         <button onClick={openModal}>Add Item</button>
-        <button>
-          <Link to="PrintNewItems">Print</Link>
-        </button>
+        <button onClick={handlePrintClick}>Print</button>
       </div>
       {isOpen === true && (
         <NewItemModal

@@ -1,0 +1,10 @@
+@media print {
+  /* Legacy WebKit */
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+  /* Standard */
+  body {
+    print-color-adjust: exact;
+  }
+}
