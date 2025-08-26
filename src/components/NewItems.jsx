@@ -3,6 +3,7 @@ import "../styles/Items.css";
 import Item from "./Item.jsx";
 import { useDataContext } from "./DataProvider.jsx";
 import NewItemModal from "./NewItemModal.jsx";
+import { Link } from "react-router-dom";
 
 export default function NewItems() {
   const { itemData, barcodeData, loading, error } = useDataContext();
@@ -27,7 +28,9 @@ export default function NewItems() {
       <div>
         <h3>New Items</h3>
         <button onClick={openModal}>Add Item</button>
-        <button>Print</button>
+        <button>
+          <Link to="PrintNewItems">Print</Link>
+        </button>
       </div>
       {isOpen === true && (
         <NewItemModal
