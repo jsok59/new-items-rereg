@@ -8,6 +8,7 @@ export default function PrintReregItems() {
 
   return (
     <div className="PrintReregItems">
+      <img src="/Reregistrationheader-WEST.jpg" alt="header" />
       <ul>
         {orderedItems.map((item) => (
           <li key={item.id} className="item-container" id={item.id}>

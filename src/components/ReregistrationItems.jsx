@@ -27,7 +27,7 @@ export default function ReregistrationItems() {
   const handlePrintClick = () => {
     localStorage.setItem("itemlist", JSON.stringify(items));
     // Navigate with state
-    navigate("/PrintNewItems", { state: { items } });
+    navigate("/PrintReregItems", { state: { items } });
   };
 
   return (

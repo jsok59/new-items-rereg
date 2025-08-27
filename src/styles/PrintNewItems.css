@@ -1,10 +1,55 @@
 @media print {
-  /* Legacy WebKit */
+  /* Reset all default spacing */
+  *,
+  *::before,
+  *::after {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  html,
+  body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Remove page margins completely */
+  @page {
+    size: letter;
+    margin: 0;
+  }
+
+  /* Optional: Remove any default browser styling */
   body {
     -webkit-print-color-adjust: exact;
+    color-adjust: exact;
   }
-  /* Standard */
-  body {
-    print-color-adjust: exact;
-  }
+}
+
+.PrintNewItems {
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  align-items: center;
+}
+
+ul {
+  list-style: none;
+  display: grid;
+}
+
+ul li {
+  display: flex;
+}
+
+.letter-container {
+  width: 8.5in;
+  height: 11in;
+  box-shadow: 20px black;
+  background-color: white;
+  padding: 10px;
 }

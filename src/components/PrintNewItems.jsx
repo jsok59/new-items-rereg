@@ -9,14 +9,16 @@ export default function PrintNewItems() {
 
   return (
     <div className="PrintNewItems">
-      <img src="/Newproductheader-EAST.jpg" alt="header" />
-      <ul>
-        {orderedItems.map((item) => (
-          <li key={item.id} className="item-container" id={item.id}>
-            <Item key={item.id} item={item}></Item>
-          </li>
-        ))}
-      </ul>
+      <div className="letter-container">
+        <img src="/Newproductheader-EAST.jpg" alt="header" />
+        <ul>
+          {orderedItems.map((item) => (
+            <li key={item.id} className="item-container" id={item.id}>
+              <Item key={item.id} item={item}></Item>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
