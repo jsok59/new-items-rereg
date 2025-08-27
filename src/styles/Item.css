@@ -1,70 +1,71 @@
 .Item {
-  width: 3.4576in;
-  height: 2.2396in;
-  background-color: white;
-  border: 0.01in solid black;
-  justify-self: center;
-  line-height: 1.2;
-  display: flex;
-  flex-direction: column;
+	width: 3.4576in;
+	height: 2.2396in;
+	background-color: white;
+	border: 0.25px solid black;
+	justify-self: center;
+	line-height: 1.2;
+	display: flex;
+	flex-direction: column;
 }
 
 .Item .header {
-  height: 0.2403in;
-  background-color: #e7d6cc;
-  font-size: 11pt;
-  display: flex;
-  flex-direction: row;
-  border-bottom: 0.01in solid black;
+	height: 0.2403in;
+	background-color: #e7d6cc;
+	font-size: 11pt;
+	display: flex;
+	flex-direction: row;
+	border-bottom: 0.25px solid black;
+	font-weight: bolder;
 }
 
 .Item .kor-description {
-  align-self: center;
+	align-self: center;
 }
 
 .Item .flex-container {
-  display: flex;
-  gap: 0.16in;
+	display: flex;
+	gap: 0.16in;
 }
 
 .header .itemnum {
-  width: 0.6458in;
-  text-align: center;
-  font-weight: bold;
-  align-self: center;
+	width: 0.6458in;
+	text-align: center;
+	font-weight: bold;
+	align-self: center;
 }
 
 .Item .content {
-  display: flex;
-  flex: 1;
-  padding: 0.049in;
-  font-size: 10pt;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 100;
+	display: flex;
+	flex: 1;
+	padding: 0.049in;
+	font-size: 10pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 100;
 }
 
 .Item .left {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1;
 }
 
 .Item .right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1;
 }
 
 .Item .right > img {
-  width: 1.7282in;
-  height: 1.5938in;
+	width: 1.7282in;
+	height: 1.5938in;
 }
 
 .Item .right .category {
-  display: inline-block;
-  width: 0.5521in;
-  height: 0.2556in;
-  margin-left: auto;
+	display: inline-block;
+	width: 0.5521in;
+	height: 0.2556in;
+	margin-left: auto;
 }

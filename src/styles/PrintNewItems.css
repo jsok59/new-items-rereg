@@ -1,55 +1,70 @@
 @media print {
-  /* Reset all default spacing */
-  *,
-  *::before,
-  *::after {
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-  }
+	body * {
+		visibility: hidden; /* Hide everything */
+	}
 
-  html,
-  body {
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+	.letter-container,
+	.letter-container * {
+		visibility: visible; /* Show only the container */
+	}
 
-  /* Remove page margins completely */
-  @page {
-    size: letter;
-    margin: 0;
-  }
+	.letter-container {
+		position: absolute;
+		left: 0;
+		top: 0;
+		margin: 0;
+		padding: 1in; /* add printable padding */
+		width: 8.5in;
+		min-height: 11in; /* allow content to stretch */
+		box-sizing: border-box;
 
-  /* Optional: Remove any default browser styling */
-  body {
-    -webkit-print-color-adjust: exact;
-    color-adjust: exact;
-  }
+		/* Important: let content flow across pages */
+		page-break-before: auto;
+		page-break-after: auto;
+		page-break-inside: auto;
+	}
+
+	@page {
+		size: letter;
+		margin: 0; /* remove browser print margins */
+	}
+
+	/* Optional: Remove any default browser styling */
+	body {
+		-webkit-print-color-adjust: exact;
+		color-adjust: exact;
+	}
 }
 
 .PrintNewItems {
-  background-color: aliceblue;
-  display: flex;
-  justify-content: center;
-  padding: 40px;
-  align-items: center;
+	background-color: gray;
+	display: flex;
+	justify-content: center;
+	padding: 40px;
+	align-items: center;
 }
 
-ul {
-  list-style: none;
-  display: grid;
+.PrintNewItems ul {
+	list-style: none;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-self: center;
+	width: max-content;
+	margin-top: 10px;
+	gap: 10px 60px;
+	padding: 0;
 }
 
-ul li {
-  display: flex;
+.PrintNewItems ul li {
+	display: flex;
+	width: min-content;
+	justify-self: center;
 }
 
-.letter-container {
-  width: 8.5in;
-  height: 11in;
-  box-shadow: 20px black;
-  background-color: white;
-  padding: 10px;
+.PrintNewItems .letter-container {
+	width: 8.5in;
+	height: 11in;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+	background-color: white;
+	padding: 0.15in 0.25in 0.25in 0.25in;
 }
